@@ -10,21 +10,21 @@ public class ByteUtil {
         System.arraycopy(byte_2, 0, byte_3, byte_1.length, byte_2.length);
         return byte_3;
     }
-    
+
     public static byte[] byteMergerAll(byte[]... values) {
         int length_byte = 0;
-            for (int i = 0; i < values.length; i++) {
-                length_byte += values[i].length;
-            }
-            byte[] all_byte = new byte[length_byte];
-            int countLength = 0;
-            for (int i = 0; i < values.length; i++) {
-                byte[] b = values[i];
-                System.arraycopy(b, 0, all_byte, countLength, b.length);
-                countLength += b.length;
-            }
-            return all_byte;
+        for (int i = 0; i < values.length; i++) {
+            length_byte += values[i].length;
         }
+        byte[] all_byte = new byte[length_byte];
+        int countLength = 0;
+        for (int i = 0; i < values.length; i++) {
+            byte[] b = values[i];
+            System.arraycopy(b, 0, all_byte, countLength, b.length);
+            countLength += b.length;
+        }
+        return all_byte;
+    }
 
     public static void printHexString(byte[] b) {
         System.out.println();
@@ -186,6 +186,7 @@ public class ByteUtil {
     }
 
     public static void main(String[] args) throws IOException {
+
         // 鍒濆鍖栨祴璇曟暟鎹�
         // byte[] msg = new byte[429], b = new byte[1];
         // for (int i = 0; i < msg.length; i++) {

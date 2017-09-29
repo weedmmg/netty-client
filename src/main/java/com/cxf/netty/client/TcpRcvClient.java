@@ -12,7 +12,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import com.cxf.netty.client.codec.TcpDecode;
 import com.cxf.netty.client.codec.TcpEncode;
 
-public class TcpClient {
+public class TcpRcvClient {
 
     public void connect(String host, int port) throws Exception {
         EventLoopGroup workerGroup = new NioEventLoopGroup();
@@ -27,7 +27,7 @@ public class TcpClient {
                 public void initChannel(SocketChannel ch) throws Exception {
                     ch.pipeline().addLast(new TcpDecode());
                     ch.pipeline().addLast(new TcpEncode());
-                    ch.pipeline().addLast(new TcpClientInboundHandler());
+                    ch.pipeline().addLast(new TcpRcvClientInboundHandler());
                 }
             });
             ChannelFuture f = b.connect(host, port).sync();
@@ -41,8 +41,8 @@ public class TcpClient {
     }
 
     public static void main(String[] args) throws Exception {
-        TcpClient client = new TcpClient();
-        for (int k = 0; k < 60000; k++) {
+        TcpRcvClient client = new TcpRcvClient();
+        for (int k = 0; k < 1; k++) {
             client.connect("192.168.1.106", 8887);
 
             System.out.println(k);

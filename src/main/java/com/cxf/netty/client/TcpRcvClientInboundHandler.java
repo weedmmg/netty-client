@@ -4,7 +4,6 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 import java.io.UnsupportedEncodingException;
-import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,17 +11,17 @@ import org.slf4j.LoggerFactory;
 import com.cxf.netty.client.codec.TcpEncode;
 import com.cxf.netty.client.util.Msg;
 
-public class TcpClientInboundHandler extends ChannelInboundHandlerAdapter {
+public class TcpRcvClientInboundHandler extends ChannelInboundHandlerAdapter {
 
     private static String encoding = "utf8";
     private static Logger logger = LoggerFactory.getLogger(TcpEncode.class);
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
-        byte cmd = (byte) 0xBE;
-        logger.debug("cmd:" + Byte.toString(cmd));
+        byte cmd = 0x03;
+
         try {
-            ctx.writeAndFlush(Msg.intMsg(cmd, UUID.randomUUID().toString().getBytes(encoding)));
+            ctx.writeAndFlush(Msg.intMsg(cmd, "e7319fee_1000".getBytes(encoding)));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -30,13 +29,14 @@ public class TcpClientInboundHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        byte cmd = (byte) 0xBE;
+        byte cmd = 0x05;
         // 处理数据
         byte[] data;
         try {
             data = Msg.conventMsg(msg);
+            logger.debug("rcv msg:" + new String(data));
             Thread.sleep(1000 * 10);
-            ctx.writeAndFlush(Msg.intMsg(cmd, UUID.randomUUID().toString().getBytes(encoding)));
+            ctx.writeAndFlush(Msg.intMsg(cmd, "".getBytes(encoding)));
             System.out.println(new String(data));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
