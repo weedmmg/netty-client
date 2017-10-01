@@ -11,6 +11,7 @@ import com.cxf.netty.client.util.MD5Util;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufOutputStream;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
@@ -34,22 +35,27 @@ public final class TcpEncode extends MessageToByteEncoder<byte[]> {
 
 		int length = msg.length;
 
-		writeMsg(msg, bout);
+		try {
+			writeMsg(msg, bout);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
 	public static void writeMsg(byte[] msg, ByteBufOutputStream bout) throws Exception {
 
-		String headStr = "EX", endStr = "86";
-
-		byte[] head = headStr.getBytes(encoding), end = endStr.getBytes(encoding);
+		byte[] head = ByteUtil.hexString2Bytes("EC"), end = ByteUtil.hexString2Bytes("68");
 
 		String sign = MD5Util.string2MD5(new String(msg));
 
-		byte[] newMsg = ByteUtil.byteMergerAll(head, msg, sign.getBytes(encoding), end);
+		ByteBuf byteBuf = Unpooled.wrappedBuffer(head, msg, sign.getBytes(encoding), end);
+		byte[] array = new byte[byteBuf.readableBytes()];
+		byteBuf.readBytes(array);
 
+		logger.debug("send msg:" + ByteUtil.printHexString(array));
 		OutputStream oout = new DataOutputStream(bout);
-		oout.write(newMsg);
+		oout.write(array);
 		oout.flush();
 		oout.close();
 	}
