@@ -4,7 +4,6 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 import java.io.UnsupportedEncodingException;
-import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +23,7 @@ public class TcpClientInboundHandler extends ChannelInboundHandlerAdapter {
         byte cmd = (byte) 0x01;
         logger.debug("cmd:" + Byte.toString(cmd));
         try {
-            ctx.writeAndFlush(Msg.intMsg(cmd, UUID.randomUUID().toString().getBytes(encoding)));
+            ctx.writeAndFlush(Msg.intMsg(cmd, "123456".getBytes(encoding)));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
