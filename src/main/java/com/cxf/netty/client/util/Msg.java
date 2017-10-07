@@ -44,6 +44,14 @@ public class Msg {
     }
 
     public static boolean checkSign(byte[] msg, byte[] sign) {
+        byte[] msgSign = ByteUtil.sumCheck(msg, 1);
+        if (ByteUtil.printHexString(msgSign).equals(ByteUtil.printHexString(sign))) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean checkSign2(byte[] msg, byte[] sign) {
         String msgSign = MD5Util.string2MD5(new String(msg));
         if (msgSign.equals(new String(sign))) {
             return false;
