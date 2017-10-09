@@ -101,7 +101,7 @@ public class Msg {
         byte[] dws = ByteUtil.longToByteArray(0, 1), nss = ByteUtil.longToByteArray(1, 1), ews = ByteUtil.longToByteArray(1, 1), speeds = ByteUtil.longToByteArray(100, 2), lls = ByteUtil
                 .longToByteArray(ll, 4), las = ByteUtil.longToByteArray(la, 4), status = ByteUtil.longToByteArray(0, 1);
 
-        return ByteUtil.byteMergerAll(dws, nss, ews, speeds, lls, las, status);
+        return ByteUtil.byteMergerAll(dws, nss, ews, speeds, lls, las);
     }
 
     public static void main(String[] args) {

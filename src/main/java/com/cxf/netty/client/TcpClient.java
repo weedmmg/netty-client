@@ -20,10 +20,10 @@ public class TcpClient implements Runnable {
             // this.connect("192.168.1.19", 8887);
 
             // nginx
-            // this.connect("192.168.1.106", 8887);
+            this.connect("192.168.1.106", 8887);
 
             // server
-            this.connect("116.62.17.108", 8887);
+            // this.connect("116.62.17.108", 8887);
         } catch (Exception e) {
             e.printStackTrace();
         }
