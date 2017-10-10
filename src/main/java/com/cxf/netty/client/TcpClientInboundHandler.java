@@ -37,7 +37,7 @@ public class TcpClientInboundHandler extends ChannelInboundHandlerAdapter {
         try {
             data = Msg.conventMsg(msg);
             Thread.sleep(1000 * 10);
-            if (times < 10) {
+            if (times < 0) {
                 times++;
                 ctx.writeAndFlush(Msg.intMsgLls(cmd, times));
             }

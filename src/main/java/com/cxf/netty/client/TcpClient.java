@@ -20,10 +20,18 @@ public class TcpClient implements Runnable {
             // this.connect("192.168.1.19", 8887);
 
             // nginx
-            this.connect("192.168.1.106", 8887);
+            // this.connect("192.168.1.106", 8887);
 
             // server
             // this.connect("116.62.17.108", 8887);
+            // this.connect("testa.keyuebao.net", 8887);
+
+            // this.connect("testb.keyuebao.net", 8886);
+
+            // this.connect("testc.keyuebao.net", 8886);
+
+            this.connect("lhtest.keyuebao.net", 8887);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -56,7 +64,7 @@ public class TcpClient implements Runnable {
     }
 
     public static void main(String[] args) throws Exception {
-        int threadNum = 1;
+        int threadNum = 100;
         Thread[] threads = new Thread[threadNum];
         TcpClient client = new TcpClient();
 
